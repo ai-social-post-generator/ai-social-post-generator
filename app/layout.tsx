@@ -1,16 +1,6 @@
-// File: app/layout.tsx
-
-import './globals.css';
-import { ReactNode } from 'react';
-
-export const metadata = {
-  title: 'AI Social Post Generator',
-  description: 'Generate social media posts using AI',
-};
-
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html>
       <body>{children}</body>
     </html>
   );
