@@ -1,6 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 
 export default function Home() {
   const [topic, setTopic] = useState('');
@@ -14,7 +17,7 @@ export default function Home() {
     const res = await fetch('/api/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ topic, platform }),
+      body: JSON.stringify({ topic, platform })
     });
     const data = await res.json();
     setPost(data.result);
@@ -22,72 +25,29 @@ export default function Home() {
   };
 
   return (
-    <div style={{ padding: 40, fontFamily: 'sans-serif' }}>
-      <h1 style={{ fontSize: '24px', fontWeight: 'bold' }}>
-        AI Social Media Post Generator
-      </h1>
-
-      <input
-        type="text"
-        value={topic}
-        onChange={(e) => setTopic(e.target.value)}
-        placeholder="Enter topic (e.g. productivity)"
-        style={{
-          padding: 10,
-          marginTop: 20,
-          width: '100%',
-          borderRadius: 6,
-          border: '1px solid #ccc',
-        }}
-      />
-
-      <select
-        value={platform}
-        onChange={(e) => setPlatform(e.target.value)}
-        style={{
-          padding: 10,
-          marginTop: 10,
-          width: '100%',
-          borderRadius: 6,
-          border: '1px solid #ccc',
-        }}
-      >
-        <option>Twitter</option>
-        <option>Instagram</option>
-        <option>LinkedIn</option>
-        <option>Facebook</option>
-      </select>
-
-      <button
-        onClick={generatePost}
-        disabled={loading || !topic}
-        style={{
-          marginTop: 20,
-          backgroundColor: '#0070f3',
-          color: 'white',
-          padding: '10px 20px',
-          border: 'none',
-          borderRadius: 6,
-          cursor: 'pointer',
-        }}
-      >
-        {loading ? 'Generating...' : 'Generate Post'}
-      </button>
-
-      {post && (
-        <textarea
-          value={post}
-          readOnly
-          style={{
-            marginTop: 20,
-            width: '100%',
-            height: 150,
-            padding: 10,
-            borderRadius: 6,
-            border: '1px solid #ccc',
-          }}
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
+      <div className="bg-white p-6 rounded-2xl shadow-lg w-full max-w-xl space-y-4">
+        <h1 className="text-2xl font-bold">AI Social Media Post Generator</h1>
+        <Input
+          placeholder="Enter a topic (e.g. productivity, travel)"
+          value={topic}
+          onChange={(e) => setTopic(e.target.value)}
         />
-      )}
+        <select
+          className="border rounded-xl p-2 w-full"
+          value={platform}
+          onChange={(e) => setPlatform(e.target.value)}
+        >
+          <option>Twitter</option>
+          <option>Instagram</option>
+          <option>LinkedIn</option>
+          <option>Facebook</option>
+        </select>
+        <Button onClick={generatePost} disabled={loading || !topic}>
+          {loading ? 'Generating...' : 'Generate Post'}
+        </Button>
+        <Textarea readOnly className="h-40" value={post} />
+      </div>
     </div>
   );
 }
