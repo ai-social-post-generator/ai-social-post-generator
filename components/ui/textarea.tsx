@@ -1,11 +1,11 @@
 // components/ui/textarea.tsx
-import React from 'react';
+import React from "react";
 
-export function Textarea(props: React.TextareaHTMLAttributes<HTMLTextAreaElement>) {
+export function Textarea({ ...props }) {
   return (
     <textarea
       {...props}
-      className={`border px-3 py-2 rounded w-full ${props.className || ''}`}
+      className="border p-2 rounded w-full"
     />
   );
 }
