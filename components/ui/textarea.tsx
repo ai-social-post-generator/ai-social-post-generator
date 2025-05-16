@@ -1,12 +1,25 @@
-export function Textarea({ value, readOnly = false }: {
+// components/ui/textarea.tsx
+import React from 'react';
+
+type TextareaProps = {
   value: string;
-  readOnly?: boolean;
-}) {
+  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  placeholder?: string;
+};
+
+export function Textarea({ value, onChange, placeholder }: TextareaProps) {
   return (
     <textarea
       value={value}
-      readOnly={readOnly}
-      className="border rounded-xl p-2 w-full"
+      onChange={onChange}
+      placeholder={placeholder}
+      style={{
+        width: '100%',
+        height: '150px',
+        padding: '0.5rem',
+        border: '1px solid #ccc',
+        borderRadius: '4px',
+      }}
     />
   );
 }
