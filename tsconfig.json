@@ -14,8 +14,6 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-
-    // 👇 This is critical for fixing your error
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"]
