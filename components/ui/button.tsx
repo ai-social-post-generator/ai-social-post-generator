@@ -1,27 +1,11 @@
 // components/ui/button.tsx
 import React from 'react';
 
-type ButtonProps = {
-  onClick?: () => void;
-  disabled?: boolean;
-  children: React.ReactNode;
-};
-
-export function Button({ onClick, disabled, children }: ButtonProps) {
+export function Button(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <button
-      onClick={onClick}
-      disabled={disabled}
-      style={{
-        backgroundColor: '#0070f3',
-        color: '#fff',
-        padding: '0.5rem 1rem',
-        borderRadius: '4px',
-        border: 'none',
-        cursor: 'pointer',
-      }}
-    >
-      {children}
-    </button>
+      {...props}
+      className={`bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 ${props.className || ''}`}
+    />
   );
 }
