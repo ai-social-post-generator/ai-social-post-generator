@@ -1,28 +1,26 @@
-import { NextRequest, NextResponse } from 'next/server';
-import OpenAI from 'openai';
+// app/api/generate/route.ts
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY! });
+import { NextRequest, NextResponse } from "next/server";
+import OpenAI from "openai";
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY, // this is the environment variable
+});
 
 export async function POST(req: NextRequest) {
-  const { topic, platform } = await req.json();
-
-  const prompt = `Create a ${platform} post about "${topic}". Make it engaging, relevant, and suitable for that platform.`;
-
   try {
+    const { topic, tone } = await req.json();
+
+    const prompt = `Write a social media post about "${topic}" in a "${tone}" tone.`;
+
     const completion = await openai.chat.completions.create({
-      model: 'gpt-4',
-      messages: [
-        { role: 'system', content: 'You are a social media marketing expert.' },
-        { role: 'user', content: prompt }
-      ],
-      temperature: 0.7,
-      max_tokens: 300
+      model: "gpt-3.5-turbo",
+      messages: [{ role: "user", content: prompt }],
     });
 
-    const result = completion.choices[0].message.content;
-    return NextResponse.json({ result });
-  } catch (err) {
-    console.error(err);
-    return NextResponse.json({ result: 'Something went wrong.' }, { status: 500 });
+    return NextResponse.json({ result: completion.choices[0].message.content });
+  } catch (error) {
+    console.error("API Error:", error);
+    return NextResponse.json({ error: "Something went wrong." }, { status: 500 });
   }
 }
