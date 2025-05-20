@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY, // this is the environment variable
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
 export async function POST(req: NextRequest) {
@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ result: completion.choices[0].message.content });
   } catch (error) {
-    console.error("API Error:", error);
+    console.error("API error:", error);
     return NextResponse.json({ error: "Something went wrong." }, { status: 500 });
   }
 }
