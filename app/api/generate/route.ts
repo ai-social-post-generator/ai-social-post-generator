@@ -2,7 +2,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
-import { OPENAI_API_KEY } from "@/utils/env"; // update path if needed
+import { OPENAI_API_KEY } from "../../utils/env";
 
 const openai = new OpenAI({
   apiKey: OPENAI_API_KEY,
