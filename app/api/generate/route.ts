@@ -2,21 +2,23 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
+import { OPENAI_API_KEY } from "@/utils/env"; // update path if needed
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: OPENAI_API_KEY,
 });
 
 export async function POST(req: NextRequest) {
   try {
-    const { topic, tone } = await req.json();
-
-    const prompt = `Write a social media post about "${topic}" in a "${tone}" tone.`;
+    const body = await req.json();
+    console.log("Received request body:", body);
 
     const completion = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
-      messages: [{ role: "user", content: prompt }],
+      messages: body.messages,
     });
+
+    console.log("OpenAI Response:", completion);
 
     return NextResponse.json({ result: completion.choices[0].message.content });
   } catch (error) {
